@@ -537,7 +537,7 @@ function showLock(mode) {
   $('#lockBtn').innerHTML = LOCK_ICON;
   $('#lockCancel').classList.toggle('hidden', mode !== 'old');
   const now = new Date();
-  $('#lockDate').textContent = `${gWeek.format(now)} · ${hFull.format(now)}`;
+  $('#lockDate').innerHTML = `${gWeek.format(now)}، ${gFull.format(now)} م<br>${hFull.format(now)}`;
   const st = $('#stars');
   if (!st.childElementCount) {
     let h = '';
