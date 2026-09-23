@@ -1,13 +1,136 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="bg" cx="50%" cy="25%" r="85%"><stop offset="0" stop-color="#2a3a78"/><stop offset="1" stop-color="#070a16"/></radialGradient>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7e2ad"/><stop offset="1" stop-color="#d9a94e"/></linearGradient>
-    <mask id="m"><rect width="512" height="512" fill="#fff"/><circle cx="310" cy="205" r="118" fill="#000"/></mask>
+    <radialGradient id="sky" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#18234a"/><stop offset="1" stop-color="#03050c"/></radialGradient>
+    <radialGradient id="glow" r="50%"><stop offset=".74" stop-color="#fff2d2" stop-opacity=".32"/><stop offset=".86" stop-color="#fff2d2" stop-opacity=".08"/><stop offset="1" stop-color="#fff2d2" stop-opacity="0"/></radialGradient>
+    <radialGradient id="base" cx="44%" cy="40%" r="62%"><stop offset="0" stop-color="#f4f1e8"/><stop offset=".6" stop-color="#e2ddd1"/><stop offset=".92" stop-color="#bdb7aa"/><stop offset="1" stop-color="#9d978a"/></radialGradient>
+    <radialGradient id="limb" r="50%"><stop offset=".62" stop-color="#1a1408" stop-opacity="0"/><stop offset=".94" stop-color="#1a1408" stop-opacity=".22"/><stop offset="1" stop-color="#1a1408" stop-opacity=".45"/></radialGradient>
+    <clipPath id="c"><circle cx="256" cy="256" r="190"/></clipPath>
+
+    <!-- حواف البحار القمرية غير منتظمة كالحقيقية -->
+    <filter id="mare" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="4" seed="5" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="46" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="3.2"/>
+    </filter>
+    <filter id="mareCore" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="12" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="30" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="5"/>
+    </filter>
+    <!-- تضاريس بارزة مضاءة -->
+    <filter id="relief" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="5" seed="3" result="n"/>
+      <feDiffuseLighting in="n" surfaceScale="2.2" lighting-color="#ffffff" result="l"><feDistantLight azimuth="225" elevation="58"/></feDiffuseLighting>
+      <feComposite in="SourceGraphic" in2="l" operator="arithmetic" k1="1.22" k2="0" k3="0" k4="0" result="m"/>
+      <feComposite in="m" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.22" numOctaves="2" seed="9"/>
+      <feColorMatrix values="0 0 0 0 .3  0 0 0 0 .29  0 0 0 0 .27  .9 0 0 0 -.42"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <filter id="tiny" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".9"/></filter>
   </defs>
-  <rect width="512" height="512" fill="url(#bg)"/>
-  <circle cx="250" cy="262" r="140" fill="url(#g)" mask="url(#m)"/>
-  <circle cx="372" cy="318" r="9" fill="#f7e2ad"/>
-  <circle cx="398" cy="150" r="6" fill="#fff" opacity=".8"/>
-  <circle cx="140" cy="120" r="5" fill="#fff" opacity=".6"/>
-  <circle cx="330" cy="400" r="4" fill="#fff" opacity=".6"/>
+
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <g fill="#fff">
+    <circle cx="58" cy="66" r="2.2" opacity=".7"/><circle cx="458" cy="92" r="1.8" opacity=".6"/>
+    <circle cx="472" cy="424" r="2.2" opacity=".5"/><circle cx="38" cy="446" r="1.8" opacity=".6"/>
+    <circle cx="118" cy="26" r="1.3" opacity=".5"/><circle cx="404" cy="484" r="1.3" opacity=".5"/>
+    <circle cx="488" cy="250" r="1.2" opacity=".4"/><circle cx="22" cy="230" r="1.2" opacity=".4"/>
+  </g>
+  <circle cx="256" cy="256" r="252" fill="url(#glow)"/>
+
+  <g filter="url(#relief)">
+    <g clip-path="url(#c)">
+      <circle cx="256" cy="256" r="190" fill="url(#base)"/>
+
+      <!-- البحار القمرية -->
+      <g fill="#7a756a" opacity=".72" filter="url(#mare)">
+        <ellipse cx="195" cy="176" rx="50" ry="38" transform="rotate(17 195 176)"/>
+        <ellipse cx="283" cy="178" rx="31" ry="29"/>
+        <ellipse cx="318" cy="238" rx="40" ry="30" transform="rotate(23 318 238)"/>
+        <ellipse cx="390" cy="203" rx="22" ry="18"/>
+        <ellipse cx="372" cy="286" rx="18" ry="32" transform="rotate(11 372 286)"/>
+        <circle cx="333" cy="318" r="15"/>
+        <ellipse cx="229" cy="322" rx="34" ry="23"/>
+        <ellipse cx="170" cy="333" rx="18" ry="15"/>
+        <ellipse cx="136" cy="246" rx="44" ry="82" transform="rotate(9 136 246)"/>
+        <ellipse cx="258" cy="118" rx="78" ry="11"/>
+        <ellipse cx="260" cy="216" rx="14" ry="11"/>
+        <ellipse cx="206" cy="242" rx="24" ry="17"/>
+        <ellipse cx="160" cy="300" rx="24" ry="20"/>
+        <ellipse cx="236" cy="200" rx="18" ry="14"/>
+      </g>
+      <g fill="#5e5a51" opacity=".38" filter="url(#mareCore)">
+        <ellipse cx="190" cy="170" rx="30" ry="22"/>
+        <ellipse cx="285" cy="182" rx="18" ry="16"/>
+        <ellipse cx="322" cy="244" rx="22" ry="16"/>
+        <ellipse cx="392" cy="204" rx="12" ry="10"/>
+        <ellipse cx="128" cy="232" rx="24" ry="48"/>
+        <ellipse cx="224" cy="326" rx="18" ry="12"/>
+      </g>
+
+      <rect width="512" height="512" filter="url(#grain)"/>
+
+      <!-- أشعة فوهة تيخو وكوبرنيكوس وكبلر -->
+      <g stroke="#fffdf6" stroke-linecap="round" filter="url(#soft)" opacity=".26">
+        <g stroke-width="3.2">
+          <line x1="229" y1="398" x2="229" y2="200"/><line x1="229" y1="398" x2="270" y2="215"/>
+          <line x1="229" y1="398" x2="320" y2="240"/><line x1="229" y1="398" x2="362" y2="282"/>
+          <line x1="229" y1="398" x2="402" y2="330"/><line x1="229" y1="398" x2="422" y2="392"/>
+          <line x1="229" y1="398" x2="120" y2="300"/><line x1="229" y1="398" x2="150" y2="250"/>
+          <line x1="229" y1="398" x2="190" y2="215"/><line x1="229" y1="398" x2="90" y2="362"/>
+        </g>
+        <g stroke-width="2">
+          <line x1="229" y1="398" x2="410" y2="446"/><line x1="229" y1="398" x2="300" y2="302"/>
+          <line x1="229" y1="398" x2="62" y2="420"/><line x1="229" y1="398" x2="200" y2="452"/>
+          <line x1="229" y1="398" x2="262" y2="462"/><line x1="229" y1="398" x2="332" y2="452"/>
+          <line x1="199" y1="229" x2="150" y2="180"/><line x1="199" y1="229" x2="232" y2="168"/>
+          <line x1="199" y1="229" x2="262" y2="210"/><line x1="199" y1="229" x2="252" y2="272"/>
+          <line x1="199" y1="229" x2="200" y2="292"/><line x1="199" y1="229" x2="148" y2="272"/>
+          <line x1="199" y1="229" x2="118" y2="228"/><line x1="199" y1="229" x2="172" y2="198"/>
+          <line x1="146" y1="237" x2="120" y2="210"/><line x1="146" y1="237" x2="172" y2="214"/>
+          <line x1="146" y1="237" x2="160" y2="266"/><line x1="146" y1="237" x2="122" y2="262"/>
+        </g>
+      </g>
+
+      <!-- الفوهات -->
+      <g filter="url(#tiny)">
+        <circle cx="229" cy="398" r="10" fill="#fffdf6"/><circle cx="231" cy="400" r="5.5" fill="#9a968c" opacity=".55"/>
+        <circle cx="199" cy="229" r="10" fill="#fbf8ef" opacity=".92"/><circle cx="201" cy="231" r="6" fill="#8d8a82" opacity=".5"/>
+        <circle cx="146" cy="237" r="5" fill="#fbf8ef" opacity=".9"/>
+        <circle cx="131" cy="184" r="4.5" fill="#ffffff"/>
+        <ellipse cx="237" cy="119" rx="9" ry="6" fill="#4d4a44" opacity=".7"/>
+        <ellipse cx="82" cy="250" rx="7" ry="15" fill="#4d4a44" opacity=".6"/>
+        <ellipse cx="416" cy="280" rx="6" ry="9" fill="none" stroke="#fbf8ef" stroke-width="2.5" opacity=".6"/>
+        <circle cx="340" cy="294" r="8" fill="none" stroke="#fbf8ef" stroke-width="2.5" opacity=".55"/>
+        <ellipse cx="408" cy="332" rx="6" ry="9" fill="none" stroke="#fbf8ef" stroke-width="2.2" opacity=".5"/>
+        <circle cx="218" cy="430" r="15" fill="none" stroke="#fbf8ef" stroke-width="2" opacity=".35"/>
+        <circle cx="300" cy="410" r="9" fill="none" stroke="#fbf8ef" stroke-width="1.8" opacity=".4"/>
+      </g>
+      <!-- نقاط فوهات صغيرة لامعة -->
+      <g fill="#fffdf6" filter="url(#tiny)">
+        <circle cx="300" cy="150" r="2" opacity=".7"/><circle cx="330" cy="170" r="1.5" opacity=".6"/>
+        <circle cx="360" cy="160" r="2.5" opacity=".5"/><circle cx="410" cy="240" r="2" opacity=".6"/>
+        <circle cx="425" cy="305" r="2.6" opacity=".5"/><circle cx="395" cy="352" r="2" opacity=".6"/>
+        <circle cx="362" cy="402" r="2.4" opacity=".5"/><circle cx="302" cy="388" r="2" opacity=".6"/>
+        <circle cx="270" cy="424" r="2.6" opacity=".5"/><circle cx="180" cy="412" r="2" opacity=".6"/>
+        <circle cx="150" cy="382" r="2.4" opacity=".5"/><circle cx="120" cy="352" r="2" opacity=".5"/>
+        <circle cx="100" cy="300" r="1.5" opacity=".6"/><circle cx="92" cy="200" r="2" opacity=".5"/>
+        <circle cx="130" cy="140" r="2.4" opacity=".5"/><circle cx="170" cy="110" r="2" opacity=".6"/>
+        <circle cx="320" cy="108" r="2" opacity=".5"/><circle cx="352" cy="130" r="1.5" opacity=".6"/>
+        <circle cx="382" cy="190" r="1.8" opacity=".6"/><circle cx="312" cy="342" r="2" opacity=".6"/>
+        <circle cx="346" cy="346" r="1.5" opacity=".6"/><circle cx="255" cy="380" r="2" opacity=".6"/>
+        <circle cx="205" cy="442" r="2.4" opacity=".5"/><circle cx="242" cy="300" r="1.5" opacity=".5"/>
+        <circle cx="286" cy="280" r="1.5" opacity=".5"/><circle cx="432" cy="270" r="2" opacity=".5"/>
+        <circle cx="440" cy="212" r="1.5" opacity=".5"/><circle cx="250" cy="90" r="2" opacity=".5"/>
+        <circle cx="212" cy="92" r="1.5" opacity=".5"/><circle cx="160" cy="172" r="1.8" opacity=".5"/>
+        <circle cx="110" cy="282" r="1.5" opacity=".5"/><circle cx="382" cy="432" r="2" opacity=".5"/>
+        <circle cx="330" cy="432" r="1.5" opacity=".6"/><circle cx="272" cy="446" r="2" opacity=".5"/>
+      </g>
+
+      <circle cx="256" cy="256" r="190" fill="url(#limb)"/>
+    </g>
+  </g>
 </svg>
